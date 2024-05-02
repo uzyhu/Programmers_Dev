@@ -99,6 +99,7 @@ app.delete("/youtubers/:id", (req, res)=> {
     }
 
     else {
+        console.log(youtuber)
         res.status(404).json({
             message : "해당 유튜버 정보를 찾을 수 없습니다."
         })
