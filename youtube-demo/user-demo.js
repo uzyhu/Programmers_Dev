@@ -10,21 +10,36 @@ let id = 1 //하나의 객체를 유니크하게 구별하기 위함
 app.use(express.json())
 //로그인
 app.post('/login',(req,res) => {
-    const who = req.body
-    let whoIs = db.forEach((element) => {
-        element == who
+    const {userId, pwd} = req.body         //userId, pwd.. userId가 디비에 저장된 회원인지 확인, pwd도 맞는지 비교
+    let loginUser = {}
+    db.forEach((element) => {
+        //a: value(객체), b: key, c: Map
+        if(element.userId === userId) { //userId 같은지 비교
+            loginUser = element
+        }
     })
-    if(whoIs) {
-        res.status(200).json({
-            message : `${who.name}님, 환영합니다!`
-        })
-    }
-    else {
-        res.status(400).json({
-            message : "해당하는 정보의 회원이 없습니다."
-        })
+
+    if(isExist(loginUser)) { 
+        console.log("아이디 발견했습니다.")
+        if(loginUser.pwd === pwd) { //pwd도 비교
+            console.log("비밀번호도 일치합니다.")
+        }
+        else {
+            console.log("비밀번호가 일치하지 않습니다.")
+        }
+    } else {
+        console.log("입력하신 아이디는 회원가입이 되지 않은 아이디입니다.")
     }
 })
+
+function isExist(obj) { //비어있는지 확인
+    if(Object.keys(obj).length) {
+        return true
+    } else {
+        return false
+    }
+}
+
 //회원가입
 app.post('/join',(req,res) => {
     const who = req.body
