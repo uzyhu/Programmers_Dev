@@ -1,25 +1,32 @@
 const express = require('express')
-const app = express()
-app.listen(7777)
-app.use(express.json())
+const router = express.Router()
+
+router.use(express.json())
 
 let db = new Map()
 let id = 1
 
-app
-    .route('/channels')
+router
+    .route('/')
     .get((req,res) => { //채널 전체 조회
+        let {userId} = req.body
         let channels = [] //json형태로 배열처럼 보내는것, 리스트
-        if(db.size) {
-            db.forEach((value) => {
-                channels.push(value)
-            })
-            res.status(200).json(channels) //엄연히 json array이기 때문에 잘감
+        if(db.size && userId) { //userId가 비어져 있으면.. (로그아웃된)
+                db.forEach((value) => {
+                    if(userId === value.userId) {
+                        channels.push(value)
+                    }
+                })
+
+                if(channels.length){ //해당 Id로 조회할 채널이 없을때
+                    res.status(200).json(channels) //엄연히 json array이기 때문에 잘감
+                }
+                else {
+                    notFoundChannel()
+                }
         }
         else {
-            res.status(404).json({
-                msg : "조회할 채널이 없습니다."
-            })
+            notFoundChannel()
         }
     }) 
     .post((req,res) => { //채널 개별 생성
@@ -47,8 +54,8 @@ function isExist(obj) {
     }
 }
 
-app
-    .route('/channels/:id')
+router
+    .route('/:id')
     .put((req,res) => { //채널 개별 수정
         let {id} = req.params
         id = parseInt(id)
@@ -61,9 +68,7 @@ app
             })
         }
         else {
-            res.status(404).json({
-                msg : "찾는 아이디를 가진 채널이 없습니다."
-            })
+            notFoundChannel()
         }
     })
     .delete((req,res) => { //채널 개별 삭제
@@ -78,9 +83,7 @@ app
             })
         }
         else {
-            res.status(404).json({
-                msg : "찾는 아이디를 가진 채널이 없습니다."
-            })
+            notFoundChannel()
         }
     })
     .get((req,res) => { //채널 개별 조회
@@ -91,8 +94,14 @@ app
             res.status(200).json(channel)
         }
         else {
-            res.status(404).json({
-                msg : "찾는 아이디를 가진 채널이 없습니다."
-            })
+            notFoundChannel()
         }
     })
+
+function notFoundChannel() {
+    res.status(404).json({
+        msg : "찾으시는 채널이 없습니다."
+    })
+}
+
+module.exports = router
