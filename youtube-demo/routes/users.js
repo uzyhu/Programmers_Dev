@@ -12,7 +12,7 @@ dotenv.config()
 
 router.use(express.json()) //http 모듈외 'json'
 
-const validate = (req, res, next) => { //validate를 미들웨어로 선언해서 문제생김
+const validate = (req, res, next) => { //validate를 미들웨어로 선언해서 문제생김 => next
     const err = validationResult(req)
 
     if (err.isEmpty()) {//이 함수를 끝낼건데 여기서 끝나는게 아니라 다음 할 일 찾아가봐(미들웨어, 함수)
@@ -27,7 +27,7 @@ router.post(
     [
         body('email').notEmpty().isEmail().withMessage('이메일 입력을 다시 해주세요'),
         body('password').notEmpty().isString().withMessage('비밀번호를 다시 작성해주세요'),
-        validate
+        validate //에러가 난다면..
     ]
     , (req, res, next) => {//로그인
         //email이 디비에 저장된 회원인지 확인

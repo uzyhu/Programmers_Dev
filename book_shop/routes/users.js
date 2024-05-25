@@ -1,30 +1,26 @@
 //express 모듈
-const express =  require('express');
+const express = require('express');//express 모듈
 const router = express.Router(); //라우팅 당하는 입장
-
-//dotenv 모듈
-const dotenv = require('dotenv');
-dotenv.config();
+const conn = require('../mariadb'); //db 모듈
+const {
+    join,
+    login,
+    passwordResetRequest,
+    passwordReset
+} = require('../controller/UserController');
 
 router.use(express.json());
 
 //회원가입
-router.post('/join', (req,res) => {
-    res.json('회원가입');
-});
+router.post('/join', join);
 
 //로그인
-router.post('/login', (req,res) => {
-    res.json('로그인');
-});
+router.post('/login', login);
 
 //비밀번호 초기화 요청
-router.post('/reset', (req,res) => {
-    res.json('비밀번호 초기화 요청');
-});
+router.post('/reset', passwordResetRequest);
 
 //비밀번호 초기화
-router.put('/reset', (req, res) => {
-    res.json('비밀번호 초기화');
-});
+router.put('/reset', passwordReset);
+
 module.exports = router;
