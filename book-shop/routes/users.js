@@ -1,7 +1,6 @@
 //express 모듈
 const express = require('express');//express 모듈
 const router = express.Router(); //라우팅 당하는 입장
-const conn = require('../mariadb'); //db 모듈
 const {
     join,
     login,

@@ -35,7 +35,7 @@ const login = (req, res) => {
         (err, results) => {
             if (err) {
                 console.log(err);
-                return res.status(StatusCodes.BAD_REQUEST).end() //BAD REQUEST
+                return res.status(StatusCodes.BAD_REQUEST).end(); //BAD REQUEST
             }
 
             const loginUser = results[0];
