@@ -2,7 +2,7 @@
 const express =  require('express');
 const app = express();
 
-//dotenv 모듈
+//dot env 모듈
 const dotenv = require('dotenv');
 dotenv.config();
 
