@@ -10,7 +10,6 @@ var token = jwt.sign({foo : 'bar'}, process.env.PRIVATE_KEY);
 
 console.log(token);
 
-
 //검증
 //만약 검증에 성공하면, 페이로드 값을 확인할 수 있음
 
