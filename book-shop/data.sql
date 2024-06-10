@@ -42,3 +42,9 @@ VALUES (1,1,1)
 
 //결제된 도서 장바구니 삭제
 DELETE FROM cartItems WHERE id IN (1,2,3);
+
+SELECT * FROM Bookshop.books LIMIT 4 OFFSET 0;
+SELECT count(*) FROM Bookshop.books;
+
+SELECT SQL_CALC_FOUND_ROWS * FROM Bookshop.books LIMIT 4 OFFSET 0;
+SELECT found_rows();

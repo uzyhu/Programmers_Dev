@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
 const conn = require('../mariadb'); //db 모듈
+const ensureAuthorization = require('../auth');
 const { StatusCodes } = require('http-status-codes'); //status code 모듈
-const dotenv = require('dotenv');
-dotenv.config();
 
 const addLike = (req,res) => {
     //좋아요 추가
@@ -58,25 +57,6 @@ const removeLike = (req, res) => { //좋아요 취소
             return res.status(StatusCodes.OK).json(results);
         })}
 };
-
-function ensureAuthorization(req, res) {
-    try {
-        let receivedJWT = req.headers["authorization"];
-        console.log("received jwt : ", receivedJWT);
-
-        let decodedJWT = jwt.verify(receivedJWT, process.env.PRIVATE_KEY);
-        console.log(decodedJWT);
-
-        return decodedJWT;
-    } catch (err) {
-        console.log(err.name);
-        console.log(err.message);
-
-        return err;
-    }
-
-}
-
 
 module.exports = {
     addLike,
