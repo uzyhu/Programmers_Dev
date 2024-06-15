@@ -37,6 +37,10 @@ const allBooks = (req, res) => {
                 return res.status(StatusCodes.BAD_REQUEST).end();
             }
             if (results.length) {
+                results.map(function(result) {
+                    result.pubDate = result.pub_date;
+                    delete result.pub_date;
+                })
                 allBooksRes.books = results;
             }
             else {

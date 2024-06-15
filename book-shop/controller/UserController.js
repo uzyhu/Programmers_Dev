@@ -20,10 +20,14 @@ const join = (req, res) => {
         (err, results) => {
             if (err) {
                 console.log(err);
-                return res.status(StatusCodes.BAD_REQUEST).end() //BAD REQUEST
+                return res.status(StatusCodes.BAD_REQUEST).end(); //BAD REQUEST
             }
 
-            return res.status(StatusCodes.CREATED).json(results);
+            if (results.affectedRows == 1) {
+                return res.status(StatusCodes.CREATED).json(results);
+            } else {
+                return res.status(StatusCodes.BAD_REQUEST).end();
+            }
         })
 }
 
@@ -43,18 +47,18 @@ const login = (req, res) => {
             //salt값 꺼내서 날 것으로 들어온 비밀번호를 암호화 해보고
             const hashPassword = crypto.pbkdf2Sync(password, loginUser.salt, 10000, 10, 'sha512').toString('base64');
             //=> 디비 비밀번호랑 비교
-            if(loginUser && loginUser.password == hashPassword) {
+            if (loginUser && loginUser.password == hashPassword) {
                 const token = jwt.sign({ //token 발행
-                    id : loginUser.id,
-                    email : loginUser.email,
+                    id: loginUser.id,
+                    email: loginUser.email,
                 }, process.env.PRIVATE_KEY, {
-                    expiresIn : '10m',
-                    issuer : 'zyzy'
+                    expiresIn: '10m',
+                    issuer: 'zyzy'
                 });
 
                 //토큰 쿠키에 담기
                 res.cookie("token", token, {
-                    httpOnly : true
+                    httpOnly: true
                 });
                 console.log(token);
 
@@ -79,9 +83,9 @@ const passwordResetRequest = (req, res) => {
             //이메일로 유저가 있는지 찾아봅니다!
             const user = results[0];
 
-            if(user) {
+            if (user) {
                 return res.status(StatusCodes.OK).json({
-                    email : email
+                    email: email
                 });
             } else {
                 return res.status(StatusCodes.UNAUTHORIZED).end();
@@ -90,7 +94,7 @@ const passwordResetRequest = (req, res) => {
 }
 
 const passwordReset = (req, res) => {
-    const {email, password} = req.body;
+    const { email, password } = req.body;
 
     let sql = 'UPDATE users SET password=?, salt=? WHERE email=?';
 
@@ -100,11 +104,11 @@ const passwordReset = (req, res) => {
     let values = [hashPassword, salt, email];
     conn.query(sql, values,
         (err, results) => {
-            if(err) {
+            if (err) {
                 console.log(err);
                 return res.status(StatusCodes.BAD_REQUEST).end();
             }
-            if(results.affectedRows == 0) { //update은 affectedrows로 확인!
+            if (results.affectedRows == 0) { //update은 affectedrows로 확인!
                 return res.status(StatusCodes.BAD_REQUEST).end();
             }
             else {
