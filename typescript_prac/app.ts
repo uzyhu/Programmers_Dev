@@ -8,27 +8,27 @@ let course: string = "Typescript";
 let completed: boolean = false;
 
 enum GenderType {
-    Male,
-    Female
+  Male,
+  Female,
 }
 
 interface IStudent {
   stdId: number;
   stdName?: string;
   age?: number; //선택적 프로퍼티
-  gender?: GenderType;
+  gender?: "male" | "female";
   course?: string;
   completed?: boolean;
   //setName(Name : string) : void;
   setName: (name: string) => void;
-//   getName: () => string;
+  //   getName: () => string;
 }
 
 class MyStudent implements IStudent {
   stdId = 123;
   stdName = "woo";
   age = 32;
-  gender = GenderType.Female;
+  gender: "male" | "female" = "male";
   course = "java";
   completed = true;
 
@@ -39,7 +39,7 @@ class MyStudent implements IStudent {
 }
 
 const myInstance = new MyStudent();
-myInstance.setName('zizi');
+myInstance.setName("zizi");
 
 // function getInfo(id: number): iStudent {
 //   return {
@@ -73,3 +73,72 @@ myInstance.setName('zizi');
 // function plus(a : number, b? : number) : void {
 //     return a+b;
 // }
+
+const user: { name: string; age: number } = {
+  name: "john",
+  age: 25,
+};
+
+type strOrNum = number | string;
+
+let numStr: strOrNum = "100";
+let item: number;
+
+function convertToString(val: strOrNum): string {
+  if (typeof val === "string") {
+    item = 0;
+  } else {
+    item = val;
+  }
+  //typeof operator
+  return String(val); //String으로 변환
+}
+
+function convertToNumber(val: strOrNum): number {
+  return Number(val); //Number로 변환
+}
+
+console.log(convertToNumber(100));
+console.log(convertToString(100));
+
+console.log(convertToNumber("100"));
+console.log(convertToString("100"));
+
+let numbers: number[] = [1, 2, 3, 4, 5];
+let fruits: string[] = ["apple", "banana", "orange"];
+
+for (let i = 0; i < numbers.length; i++) {
+  console.log(numbers[i]);
+}
+
+for (let i = 0; i < fruits.length; i++) {
+  console.log(fruits[i]);
+}
+
+//배열의 유니온 타입
+let mixedArray: (number | string)[] = [1, "two", 3, "four"];
+
+for (let i = 0; i < mixedArray.length; i++) {
+  console.log(mixedArray[i]);
+}
+
+let infer = [1, 2, 3]; //타입추론
+
+let readOnlyArray: ReadonlyArray<number> = [1, 2, 3];
+
+//튜플 : 타입의 순서가 정해져 있다.
+let greeting: [number, string, boolean] = [1, "hello", true];
+
+for (let i = 0; i < greeting.length; i++) {
+  console.log(greeting[i]);
+}
+
+//Spread 연산자 : 괄호를 벗겨준다
+let firstArray = [1, 2, 3];
+let secondArray = [4, 5, 6];
+
+let combinedArray = [...firstArray, ...secondArray];
+
+for (let i = 0; i < combinedArray.length; i++) {
+  console.log(combinedArray[i]);
+}
