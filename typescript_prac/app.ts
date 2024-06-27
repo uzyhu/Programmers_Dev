@@ -82,6 +82,7 @@ const user: { name: string; age: number } = {
 type strOrNum = number | string;
 
 let numStr: strOrNum = "100";
+numStr = 100;
 let item: number;
 
 function convertToString(val: strOrNum): string {
