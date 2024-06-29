@@ -1,3 +1,34 @@
+.board {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  color: black;
+  text-align: left;
+  font-size: 20px;
+}
+
+.delButton {
+  color : red;
+  background-color: white;
+  border : 1px solid red;
+  border-radius: 5px;
+  margin: 10px 20px;
+  font-size: 16px;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.container{
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #61dafb;
+  color: white;
+  text-align: center;
+}
+
 .App {
   text-align: center;
 }

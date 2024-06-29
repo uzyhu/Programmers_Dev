@@ -1,16 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import TodoList from "./Todolist";
+import Clock from "./Timer";
+import MyWeather from "./MyWeather";
 
 function App() {
   let name = "리액트";
 
   return (
-    <div className="App">
-      <h1>hello</h1>
-      {
-        name === "리액트" ? (<h1>YES</h1>) : null
-      }
+    <div className="container">
+      <TodoList></TodoList>
+      <Clock></Clock>
+      <MyWeather weather="맑음">일기예보</MyWeather>
     </div>
   );
 }
