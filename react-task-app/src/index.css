@@ -1,0 +1,7 @@
+/* 기본적으로 브라우저에서 제공하는 마진이나 패딩 제거 */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
