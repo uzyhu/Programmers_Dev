@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IBoard, IList, ITask } from "../../types";
+import { PiAtomLight } from "react-icons/pi";
 
 type TBoardsState = {
   modalActive: boolean;
@@ -30,6 +31,10 @@ type TAddTaskAction = {
   boardId: string;
   listId: string;
   task: ITask;
+}
+
+type TDeleteBoardAction = {
+  boardId: string;
 }
 
 const initialState: TBoardsState = {
@@ -81,7 +86,6 @@ const boardsSlice = createSlice({
     addBoard: (state, {payload}: PayloadAction<TAddBoardAction>) => {
       state.boardArray.push(payload.board) //페이로드는 보내오는 데이터, 얘는 데이터타입이 위에 씌워져있잖아?... 여기서 페이로드는 TAddBoardAction타입의 객체
     },
-
     deleteList : (state, {payload} : PayloadAction<TDeleteListAction>) => {
       state.boardArray = state.boardArray.map(
         board =>
@@ -171,9 +175,14 @@ const boardsSlice = createSlice({
         :
         board
         )
+    },
+    deleteBoard: (state, {payload}: PayloadAction<TDeleteBoardAction>) => {
+      state.boardArray = state.boardArray.filter(
+        board => board.boardId !== payload.boardId
+      )
     }
   },
 });
 
-export const {addBoard, deleteList, deleteTask, updateTask, setModalActive, addTask, addList} = boardsSlice.actions;
+export const {deleteBoard, addBoard, deleteList, deleteTask, updateTask, setModalActive, addTask, addList} = boardsSlice.actions;
 export const boardsReducer = boardsSlice.reducer;
