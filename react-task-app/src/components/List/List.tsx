@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { GrSubtract } from "react-icons/gr";
 import Task from "../Task/Task";
 import { IList, ITask } from "../../types";
@@ -9,7 +9,6 @@ import { addLog } from "../../store/slices/loggerSlice";
 import { setModalData } from "../../store/slices/modalSlice";
 import { deleteButton, header, listWrapper, name } from "./List.css";
 import ActionButton from "../ActionButton/ActionButton";
-import { board } from "../../App.css";
 import { Droppable } from "react-beautiful-dnd";
 
 type TListProps = {

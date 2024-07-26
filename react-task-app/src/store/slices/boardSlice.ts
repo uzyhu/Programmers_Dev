@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IBoard, IList, ITask } from "../../types";
-import { PiAtomLight } from "react-icons/pi";
 
 type TBoardsState = {
   modalActive: boolean;
